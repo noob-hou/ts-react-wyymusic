@@ -1,0 +1,38 @@
+[
+  {
+    "title": "发现音乐",
+    "type": "path",
+    "link": "/home",
+    "id": 1
+  },
+  {
+    "title": "我的音乐",
+    "type": "path",
+    "link": "/my",
+    "id": 2
+  },
+  {
+    "title": "关注",
+    "type": "path",
+    "link": "/friend",
+    "id": 3
+  },
+  {
+    "title": "商城",
+    "type": "link",
+    "link": "https://music.163.com/store/product",
+    "id": 4
+  },
+  {
+    "title": "音乐人",
+    "type": "link",
+    "link": "https://music.163.com/st/musician",
+    "id": 5
+  },
+  {
+    "title": "下载客户端",
+    "type": "path",
+    "link": "/download",
+    "id": 6
+  }
+]

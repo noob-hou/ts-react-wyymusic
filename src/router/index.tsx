@@ -7,6 +7,7 @@ const PlayList = React.lazy(() => import('@/views/home/c-views/playList'));
 const Ranking = React.lazy(() => import('@/views/home/c-views/ranking'));
 const Singer = React.lazy(() => import('@/views/home/c-views/singer'));
 const Recommend = React.lazy(() => import('@/views/home/c-views/recommend'));
+const Djradio = React.lazy(() => import('@/views/home/c-views/djradio'));
 
 const My = React.lazy(() => import('@/views/my'));
 const Download = React.lazy(() => import('@/views/download'));
@@ -45,6 +46,10 @@ const routes: RouteObject[] = [
       {
         path: '/home/singer',
         element: <Singer />
+      },
+      {
+        path: '/home/djradio',
+        element: <Djradio />
       }
     ]
   },
