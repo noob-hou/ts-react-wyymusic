@@ -5,3 +5,11 @@ export const apiGetBanners = () => {
     url: '/banner'
   });
 };
+export const apiGetHotRecommend = (limit: 8) => {
+  return hyRequest.get({
+    url: '/personalized',
+    params: {
+      limit
+    }
+  });
+};

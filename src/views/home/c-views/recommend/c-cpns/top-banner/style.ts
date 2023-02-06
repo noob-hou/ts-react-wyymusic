@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const BannerWrapper = styled.div`
   .banner {
@@ -6,7 +6,7 @@ export const BannerWrapper = styled.div`
     display: flex;
     position: relative;
   }
-`
+`;
 
 export const BannerLeft = styled.div`
   position: relative;
@@ -46,7 +46,7 @@ export const BannerLeft = styled.div`
       }
     }
   }
-`
+`;
 export const BannerRight = styled.a.attrs({
   href: 'https://music.163.com/#/download',
   target: '_blank'
@@ -54,7 +54,7 @@ export const BannerRight = styled.a.attrs({
   width: 254px;
   height: 270px;
   background: url(${require('@/assets/img/download.png')});
-`
+`;
 
 export const BannerControl = styled.div`
   position: absolute;
@@ -62,9 +62,11 @@ export const BannerControl = styled.div`
   right: 0;
   top: 50%;
   transform: translateY(-50%);
-
+  height: 63px;
   .btn {
     position: absolute;
+    top: 0;
+
     width: 37px;
     height: 63px;
     background-image: url(${require('@/assets/img/banner_sprite.png')});
@@ -85,4 +87,4 @@ export const BannerControl = styled.div`
     right: -68px;
     background-position: 0 -508px;
   }
-`
+`;
