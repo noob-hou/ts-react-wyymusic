@@ -1,7 +1,7 @@
 import { useAppDispatch } from '@/store';
 import { FC, ReactNode, useEffect } from 'react';
 import React, { memo } from 'react';
-import { fetchBannerData, fetchHotRecommend } from './store';
+import { fetchRecommendData } from './store';
 
 import TopBanner from './c-cpns/top-banner';
 import { RecommendWrapper } from './style';
@@ -13,8 +13,7 @@ interface IProps {
 const Recommend: FC<IProps> = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchBannerData());
-    dispatch(fetchHotRecommend());
+    dispatch(fetchRecommendData());
   }, []);
   return (
     <RecommendWrapper>

@@ -13,3 +13,11 @@ export const apiGetHotRecommend = (limit: 8) => {
     }
   });
 };
+export const apiGetNewAlbum = (limit = 10) => {
+  return hyRequest.get({
+    url: '/album/newest',
+    params: {
+      limit
+    }
+  });
+};
