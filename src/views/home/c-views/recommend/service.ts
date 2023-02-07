@@ -21,3 +21,20 @@ export const apiGetNewAlbum = (limit = 10) => {
     }
   });
 };
+export const apiGetPlaylist = (id: number) => {
+  return hyRequest.get({
+    url: '/playlist/detail',
+    params: {
+      id
+    }
+  });
+};
+
+export const apiGetArtistList = (limit = 30) => {
+  return hyRequest.get({
+    url: '/artist/list',
+    params: {
+      limit
+    }
+  });
+};

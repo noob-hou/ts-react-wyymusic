@@ -7,6 +7,7 @@ import TopBanner from './c-cpns/top-banner';
 import { RecommendWrapper } from './style';
 import HotRecommend from './c-cpns/hot-recommend';
 import NewAlbum from './c-cpns/new-album';
+import RankingList from './c-cpns/ranking-list';
 interface IProps {
   children?: ReactNode;
 }
@@ -22,6 +23,7 @@ const Recommend: FC<IProps> = () => {
         <div className="left">
           <HotRecommend />
           <NewAlbum />
+          <RankingList />
         </div>
         <div className="right">right</div>
       </div>
