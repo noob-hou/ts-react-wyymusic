@@ -30,7 +30,7 @@ export const apiGetPlaylist = (id: number) => {
   });
 };
 
-export const apiGetArtistList = (limit = 30) => {
+export const apiGetSingerList = (limit = 30) => {
   return hyRequest.get({
     url: '/artist/list',
     params: {

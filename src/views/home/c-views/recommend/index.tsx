@@ -8,6 +8,9 @@ import { RecommendWrapper } from './style';
 import HotRecommend from './c-cpns/hot-recommend';
 import NewAlbum from './c-cpns/new-album';
 import RankingList from './c-cpns/ranking-list';
+import UserLogin from './c-cpns/user-login';
+import SettledSinger from './c-cpns/settled-singer';
+import HotAnchor from './c-cpns/hot-anchor';
 interface IProps {
   children?: ReactNode;
 }
@@ -25,7 +28,11 @@ const Recommend: FC<IProps> = () => {
           <NewAlbum />
           <RankingList />
         </div>
-        <div className="right">right</div>
+        <div className="right">
+          <UserLogin />
+          <SettledSinger />
+          <HotAnchor />
+        </div>
       </div>
     </RecommendWrapper>
   );

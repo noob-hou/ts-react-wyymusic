@@ -1,17 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { apiGetBanners, apiGetHotRecommend, apiGetNewAlbum, apiGetPlaylist } from './service';
+import { apiGetBanners, apiGetHotRecommend, apiGetNewAlbum, apiGetPlaylist, apiGetSingerList } from './service';
 import type { Dispatch } from 'redux';
 interface IRecommendState {
   banners: any[];
   hotRecommend: any[];
   newAlbum: any[];
   rankings: any[];
+  singers: any[];
 }
 const initialState: IRecommendState = {
   banners: [],
   hotRecommend: [],
   newAlbum: [],
-  rankings: []
+  rankings: [],
+  singers: []
 };
 
 export const fetchRecommendData = createAsyncThunk('recommend', (arg, { dispatch }) => {
@@ -23,6 +25,9 @@ export const fetchRecommendData = createAsyncThunk('recommend', (arg, { dispatch
   });
   apiGetNewAlbum().then((res) => {
     dispatch(changeNewAlbumAction(res.albums));
+  });
+  apiGetSingerList(5).then((res) => {
+    dispatch(changeSingersAction(res.artists));
   });
   getRankingList(dispatch);
 });
@@ -51,13 +56,19 @@ const recommendSlice = createSlice({
       state.newAlbum = payload;
     },
     changeRankingsAction(state, { payload }) {
-      console.log(payload);
-
       state.rankings = payload;
+    },
+    changeSingersAction(state, { payload }) {
+      state.singers = payload;
     }
   }
 });
 
-export const { changeBannersAction, changeHotRecommendAction, changeNewAlbumAction, changeRankingsAction } =
-  recommendSlice.actions;
+export const {
+  changeBannersAction,
+  changeHotRecommendAction,
+  changeNewAlbumAction,
+  changeRankingsAction,
+  changeSingersAction
+} = recommendSlice.actions;
 export default recommendSlice.reducer;
