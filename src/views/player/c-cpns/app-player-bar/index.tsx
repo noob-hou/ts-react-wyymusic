@@ -2,7 +2,7 @@ import { FC, ReactNode, useState } from 'react';
 import React, { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { Control, PlayBarWrapper, PlayInfo } from './style';
+import { Control, PlayBarWrapper, PlayInfo, Operator } from './style';
 import { Slider } from 'antd';
 
 interface IProps {
@@ -42,6 +42,17 @@ const AppPlayBar: FC<IProps> = () => {
             </div>
           </div>
         </PlayInfo>
+        <Operator>
+          <div className="left">
+            <button className="sprite_playbar btn favor"></button>
+            <button className="sprite_playbar btn share"></button>
+          </div>
+          <div className="right sprite_playbar">
+            <button className="sprite_playbar btn volume"></button>
+            <button className="sprite_playbar btn loop"></button>
+            <button className="sprite_playbar btn playlist">{123}</button>
+          </div>
+        </Operator>
       </div>
     </PlayBarWrapper>
   );

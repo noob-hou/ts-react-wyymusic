@@ -1,7 +1,8 @@
 // 1.手动切换
-export const BASE_URL = 'http://codercba.com:9002'
+// export const BASE_URL = 'http://codercba.com:9002'
+export const BASE_URL = 'api';
 // export const BASE_URL = 'http://codercba.prod:9002'
-export const TIME_OUT = 10000
+export const TIME_OUT = 10000;
 
 // 2.依赖当前环境: development/production
 // console.log(process.env.NODE_ENV)
