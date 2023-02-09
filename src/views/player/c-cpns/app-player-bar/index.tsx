@@ -28,7 +28,7 @@ const AppPlayBar: FC<IProps> = () => {
   );
   useEffect(() => {
     dispatch(fetchPlayerData());
-    audioRef.current!.src = formatterAudioUrl(167876);
+    audioRef.current!.src = formatterAudioUrl(currentSong.id);
     audioRef.current
       ?.play()
       .then(() => {
@@ -37,7 +37,8 @@ const AppPlayBar: FC<IProps> = () => {
       .catch(() => {
         setIsPlaying(false);
       });
-    setDuration(currentSong?.dt);
+
+    setDuration(currentSong?.dt ?? 0);
     return () => {
       setIsPlaying(false);
     };
@@ -60,9 +61,9 @@ const AppPlayBar: FC<IProps> = () => {
     setCurrentTime(time);
   };
   const sliderAfterChange = (value: number) => {
-    const time = ((value / 100.0) * duration) / 1000;
+    const time = (value / 100) * duration;
     if (audioRef.current) {
-      audioRef.current.currentTime = time;
+      audioRef.current.currentTime = time / 1000;
       setCurrentTime(time);
       !isPlaying && playToggle();
     }
@@ -91,7 +92,7 @@ const AppPlayBar: FC<IProps> = () => {
                 value={progress}
                 tooltip={{ formatter: null }}
                 step={0.2}
-                onChange={throttle(sliderChange, 500)}
+                onChange={sliderChange}
                 onAfterChange={sliderAfterChange}
               />
               <div className="time">
