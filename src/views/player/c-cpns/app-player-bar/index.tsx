@@ -20,9 +20,10 @@ const AppPlayBar: FC<IProps> = () => {
   const [isSliding, setIsSliding] = useState(false);
   const dispatch = useAppDispatch();
   const audioRef = useRef<HTMLAudioElement>(null);
-  const { currentSong } = useAppSelector(
+  const { currentSong, lyrics } = useAppSelector(
     (state) => ({
-      currentSong: state.player.currentSong
+      currentSong: state.player.currentSong,
+      lyrics: state.player.lyrics
     }),
     shallowEqual
   );
@@ -50,11 +51,20 @@ const AppPlayBar: FC<IProps> = () => {
   };
   //播放中Audio标签时间的回调
   const timeUpdate = (e: any) => {
+    const currentTime = e.target.currentTime;
     if (!isSliding) {
-      const currentTime = e.target.currentTime;
       setCurrentTime(currentTime);
       setProgress(((currentTime * 1000) / duration) * 100);
     }
+    const time = currentTime * 1000;
+    let index = lyrics.length - 1;
+    for (let i = 0; i < lyrics.length; i++) {
+      if (lyrics[i].time > time) {
+        index = i - 1;
+        break;
+      }
+    }
+    console.log(lyrics[index].text);
   };
   //滑动条改变
   const sliderChange = (value: number) => {

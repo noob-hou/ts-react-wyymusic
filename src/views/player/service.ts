@@ -8,3 +8,11 @@ export const apiGetPlayDetail = (ids: number) => {
     }
   });
 };
+export const apiGetLyrics = (id: number) => {
+  return hyRequest.get({
+    url: '/lyric',
+    params: {
+      id
+    }
+  });
+};
