@@ -14,6 +14,9 @@ export const formatterAudioUrl = (id: number): string => {
 };
 
 export const formatterTime = (time: number): string => {
+  if (!time) {
+    return `00:00`;
+  }
   const secondTime = time / 1000;
   const minute = Math.floor(secondTime / 60);
   const second = Math.floor(secondTime) % 60;
