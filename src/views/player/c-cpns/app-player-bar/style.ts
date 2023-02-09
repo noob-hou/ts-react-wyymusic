@@ -60,6 +60,9 @@ export const PlayInfo = styled.div`
     width: 34px;
     height: 34px;
     border-radius: 5px;
+    overflow: hidden;
+    img {
+    }
   }
 
   .info {

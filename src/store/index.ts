@@ -2,9 +2,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useSelector, useDispatch, TypedUseSelectorHook, shallowEqual } from 'react-redux';
 
 import recommendReducer from '@/views/home/c-views/recommend/store';
+import playerReducer from '@/views/player/store';
 const store = configureStore({
   reducer: {
-    recommend: recommendReducer
+    recommend: recommendReducer,
+    player: playerReducer
   }
 });
 type GetStateFnType = typeof store.getState;
