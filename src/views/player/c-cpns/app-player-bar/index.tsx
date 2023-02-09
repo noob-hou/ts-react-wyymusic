@@ -1,13 +1,12 @@
 import { FC, ReactNode, useEffect, useRef, useState } from 'react';
 import React, { memo } from 'react';
 import { NavLink } from 'react-router-dom';
-
 import { Control, PlayBarWrapper, PlayInfo, Operator } from './style';
 import { Slider } from 'antd';
 import { fetchPlayerData } from '../../store';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { shallowEqual } from 'react-redux';
-import { formatterAudioUrl, formatterTime, formatterUrl } from '@/utils/formatter';
+import { formatterAudioUrl, formatterTime } from '@/utils/formatter';
 import throttle from '@/utils/throttle';
 
 interface IProps {
@@ -18,6 +17,7 @@ const AppPlayBar: FC<IProps> = () => {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [isSliding, setIsSliding] = useState(false);
   const dispatch = useAppDispatch();
   const audioRef = useRef<HTMLAudioElement>(null);
   const { currentSong } = useAppSelector(
@@ -50,12 +50,15 @@ const AppPlayBar: FC<IProps> = () => {
   };
   //播放中Audio标签时间的回调
   const timeUpdate = (e: any) => {
-    const currentTime = e.target.currentTime;
-    setCurrentTime(currentTime);
-    setProgress(((currentTime * 1000) / duration) * 100);
+    if (!isSliding) {
+      const currentTime = e.target.currentTime;
+      setCurrentTime(currentTime);
+      setProgress(((currentTime * 1000) / duration) * 100);
+    }
   };
   //滑动条改变
   const sliderChange = (value: number) => {
+    setIsSliding(true);
     setProgress(value);
     const time = ((value / 100) * duration) / 1000;
     setCurrentTime(time);
@@ -65,6 +68,7 @@ const AppPlayBar: FC<IProps> = () => {
     if (audioRef.current) {
       audioRef.current.currentTime = time / 1000;
       setCurrentTime(time);
+      setIsSliding(false);
       !isPlaying && playToggle();
     }
   };
