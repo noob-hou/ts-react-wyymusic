@@ -2,6 +2,8 @@ import { FC, ReactNode } from 'react';
 import React, { memo } from 'react';
 import { RankingItemWrapper } from './style';
 import { formatterUrl } from '@/utils/formatter';
+import { useAppDispatch } from '@/store';
+import { fetchPlayerData } from '@/views/player/store';
 
 interface IProps {
   children?: ReactNode;
@@ -9,6 +11,11 @@ interface IProps {
 }
 const RankingListItem: FC<IProps> = (props) => {
   const { itemData } = props;
+  const dispatch = useAppDispatch();
+  //点击播放
+  function playSong(id: number) {
+    dispatch(fetchPlayerData(id));
+  }
   return (
     <RankingItemWrapper>
       <div className="header">
@@ -32,7 +39,7 @@ const RankingListItem: FC<IProps> = (props) => {
               <div className="info">
                 <div className="name">{item.name}</div>
                 <div className="operator">
-                  <button className="btn sprite_02 play"></button>
+                  <button className="btn sprite_02 play" onClick={() => playSong(item.id)}></button>
                   <button className="btn sprite_icon2 add"></button>
                   <button className="btn sprite_02 favor"></button>
                 </div>

@@ -3,10 +3,10 @@ import React, { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Control, PlayBarWrapper, PlayInfo, Operator } from './style';
 import { Slider } from 'antd';
-import { fetchPlayerData } from '../../store';
+import { changeLyricsIndexAction } from '../../store';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { shallowEqual } from 'react-redux';
-import { formatterAudioUrl, formatterTime } from '@/utils/formatter';
+import { formatterAudioUrl, formatterTime, formatterUrl } from '@/utils/formatter';
 import throttle from '@/utils/throttle';
 
 interface IProps {
@@ -20,15 +20,15 @@ const AppPlayBar: FC<IProps> = () => {
   const [isSliding, setIsSliding] = useState(false);
   const dispatch = useAppDispatch();
   const audioRef = useRef<HTMLAudioElement>(null);
-  const { currentSong, lyrics } = useAppSelector(
+  const { currentSong, lyrics, lyricIndex } = useAppSelector(
     (state) => ({
       currentSong: state.player.currentSong,
-      lyrics: state.player.lyrics
+      lyrics: state.player.lyrics,
+      lyricIndex: state.player.lyricIndex
     }),
     shallowEqual
   );
   useEffect(() => {
-    dispatch(fetchPlayerData());
     audioRef.current!.src = formatterAudioUrl(currentSong.id);
     audioRef.current
       ?.play()
@@ -64,7 +64,12 @@ const AppPlayBar: FC<IProps> = () => {
         break;
       }
     }
-    console.log(lyrics[index].text);
+    if (lyricIndex === index) {
+      return;
+    } else {
+      dispatch(changeLyricsIndexAction(index));
+      console.log(lyrics[index].text);
+    }
   };
   //滑动条改变
   const sliderChange = (value: number) => {
@@ -93,7 +98,7 @@ const AppPlayBar: FC<IProps> = () => {
         <PlayInfo>
           <div className="image">
             <NavLink to={'/player'}>
-              <img src={currentSong?.al?.picUrl} alt="" />
+              <img src={formatterUrl(currentSong?.al?.picUrl, 50)} alt="" />
             </NavLink>
           </div>
           <div className="info">
