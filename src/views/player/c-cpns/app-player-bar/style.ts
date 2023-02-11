@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 interface IProps {
   isPlaying?: boolean;
+  playMode?: number;
 }
 export const PlayBarWrapper = styled.div`
   position: fixed;
@@ -124,7 +125,7 @@ export const PlayInfo = styled.div`
   }
 `;
 
-export const Operator = styled.div`
+export const Operator = styled.div<IProps>`
   display: flex;
   position: relative;
   top: 5px;
@@ -154,6 +155,16 @@ export const Operator = styled.div`
     }
 
     .loop {
+      background-position: ${(props) => {
+        switch (props.playMode) {
+          case 0:
+            return '-66px -248px';
+          case 1:
+            return '-66px -344px';
+          default:
+            return '-3px -344px';
+        }
+      }};
     }
 
     .playlist {

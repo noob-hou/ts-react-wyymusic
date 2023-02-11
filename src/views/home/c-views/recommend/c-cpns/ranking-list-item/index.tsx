@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import { RankingItemWrapper } from './style';
 import { formatterUrl } from '@/utils/formatter';
 import { useAppDispatch } from '@/store';
-import { fetchPlayerData } from '@/views/player/store';
+import { changeSongListAction, changeSongListIndexAction, fetchPlayerData } from '@/views/player/store';
 
 interface IProps {
   children?: ReactNode;
@@ -16,6 +16,12 @@ const RankingListItem: FC<IProps> = (props) => {
   function playSong(id: number) {
     dispatch(fetchPlayerData(id));
   }
+
+  //将排行榜加入播放列表
+  function pushPlayList() {
+    dispatch(changeSongListAction(itemData.tracks));
+    dispatch(changeSongListIndexAction(0));
+  }
   return (
     <RankingItemWrapper>
       <div className="header">
@@ -26,7 +32,7 @@ const RankingListItem: FC<IProps> = (props) => {
         <div className="info">
           <div className="name">{itemData.name}</div>
           <div>
-            <button className="sprite_02 btn play"></button>
+            <button className="sprite_02 btn play" onClick={pushPlayList}></button>
             <button className="sprite_02 btn favor"></button>
           </div>
         </div>
