@@ -1,3 +1,4 @@
+import { apiGetPlaylist } from './../home/c-views/recommend/service';
 import { apiGetPlayDetail, apiGetLyrics } from './service';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getLyrics, ILyric } from '@/utils/parse-lyric';
@@ -23,7 +24,7 @@ const initialState: IState = {
 };
 //播放方式
 const playTypeList: any[] = ['随机播放', '单曲循环', '列表循环'];
-
+//获取歌曲
 export const fetchPlayerData = createAsyncThunk<void, number, IThunkState>(
   'player',
   (id: number, { dispatch, getState }) => {
@@ -33,37 +34,18 @@ export const fetchPlayerData = createAsyncThunk<void, number, IThunkState>(
     if (index === -1) {
       apiGetPlayDetail(id).then((res) => {
         const song = res.songs[0];
-        getLyricsFn(song.id).then((result) => {
-          dispatch(changeLyricsAction(result));
-          song.lyric = result;
-          //改变当前播放歌曲
-          // 将歌曲添加到列表 并改变列表
-          songList.push(song);
-          dispatch(changeSongListAction(songList));
-          //改变歌单数组下标
-          dispatch(changeSongListIndexAction(songList.length - 1));
-        });
+        songList.push(song);
+        dispatch(changeSongListAction(songList));
+        //改变歌单数组下标
+        dispatch(changeSongListIndexAction(songList.length - 1));
       });
     } else {
       //改变歌单数组下标
-
-      const song = { ...songList[index] };
-      if (!song.lyric) {
-        getLyricsFn(song.id).then((result) => {
-          song.lyric = result;
-          songList.splice(index, 1, song);
-          dispatch(changeSongListAction(songList));
-          dispatch(changeSongListIndexAction(index));
-          dispatch(changeLyricsAction(song.lyric));
-        });
-      } else {
-        dispatch(changeSongListIndexAction(index));
-        dispatch(changeLyricsAction(song.lyric));
-      }
+      dispatch(changeSongListIndexAction(index));
     }
   }
 );
-
+//切换歌曲
 export const changeMusicAction = createAsyncThunk<void, boolean, IThunkState>(
   'music',
   (next, { dispatch, getState }) => {
@@ -91,12 +73,24 @@ export const changeMusicAction = createAsyncThunk<void, boolean, IThunkState>(
   }
 );
 //获取歌词函数
-async function getLyricsFn(id: number) {
-  const re = await apiGetLyrics(id);
-  const lyricString = re.lrc.lyric;
-  const result = getLyrics(lyricString);
-  return result;
-}
+export const fetchLyric = createAsyncThunk<void, number, IThunkState>('lyric', (id, { dispatch, getState }) => {
+  const { songListIndex, songList } = getState().player;
+  const songsArr = JSON.parse(JSON.stringify(songList));
+  apiGetLyrics(id).then((res) => {
+    const lyricString = res.lrc.lyric;
+    const result = getLyrics(lyricString);
+    dispatch(changeLyricsAction(result));
+    songsArr[songListIndex].lyric = result;
+    dispatch(changeSongListAction(songsArr));
+  });
+});
+//获取歌曲列表
+export const fetchSongList = createAsyncThunk('songList', (id: number, { dispatch }) => {
+  apiGetPlaylist(id).then((res) => {
+    dispatch(changeSongListAction(res.playlist.tracks));
+    dispatch(changeSongListIndexAction(0));
+  });
+});
 const playerSlice = createSlice({
   name: 'player',
   initialState,

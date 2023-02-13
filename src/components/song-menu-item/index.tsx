@@ -1,4 +1,6 @@
+import { useAppDispatch } from '@/store';
 import { formatterCount, formatterUrl } from '@/utils/formatter';
+import { fetchSongList } from '@/views/player/store';
 import type { FC, ReactNode } from 'react';
 import React, { memo } from 'react';
 import { MenuItemWrapper } from './style';
@@ -8,6 +10,10 @@ interface IProps {
 }
 const SongMenuItem: FC<IProps> = (prop) => {
   const { itemData } = prop;
+  const dispatch = useAppDispatch();
+  function pushPlayList() {
+    dispatch(fetchSongList(itemData.id));
+  }
   return (
     <MenuItemWrapper>
       <div className="top">
@@ -18,7 +24,7 @@ const SongMenuItem: FC<IProps> = (prop) => {
               <i className="sprite_icon headset"></i>
               <span>{formatterCount(itemData.playCount)}</span>
             </span>
-            <div className="sprite_icon play"></div>
+            <div className="sprite_icon play" onClick={pushPlayList}></div>
           </div>
         </div>
       </div>

@@ -3,7 +3,14 @@ import React, { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Control, PlayBarWrapper, PlayInfo, Operator } from './style';
 import { Slider } from 'antd';
-import { changeLyricsIndexAction, changeMusicAction, changePlayTypeIndex, changeSongAction } from '../../store';
+import {
+  changeLyricsAction,
+  changeLyricsIndexAction,
+  changeMusicAction,
+  changePlayTypeIndex,
+  changeSongAction,
+  fetchLyric
+} from '../../store';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { shallowEqual } from 'react-redux';
 import { formatterAudioUrl, formatterTime, formatterUrl } from '@/utils/formatter';
@@ -42,6 +49,10 @@ const AppPlayBar: FC<IProps> = () => {
       });
 
     setDuration(currentSong?.dt ?? 0);
+    if (Object.keys(currentSong).length && !currentSong.lyric) {
+      dispatch(changeLyricsAction([]));
+      dispatch(fetchLyric(currentSong.id));
+    }
 
     return () => {
       setIsPlaying(false);
